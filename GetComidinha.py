@@ -1,27 +1,34 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.edge.options import Options
 from time import sleep
 import unicodedata
-import urllib
 
 def GetComidinha():
+    
+    edge_options = Options()
+    edge_options.headless = True
+    driver = webdriver.Edge(options=edge_options)
     try:
-        chrome_options = Options()
-        # chrome_options.headless = True
-        driver = webdriver.Chrome(options=chrome_options)
         driver.get('https://aluno.cefsa.edu.br/')
         
         sleep(4)
+        
+        driver.find_element("xpath", '//*[@id="fechar"]').click()
+        
+        sleep(1)
 
         driver.find_element("xpath", '//*[@id="Usuario"]').send_keys('082190024')
+        
+        sleep(1)
+        
         driver.find_element("xpath", '//*[@id="senhaAluno"]').send_keys('Nestruta3')
+        
+        sleep(1)
         
         driver.find_element("xpath", '//*[@id="alunos"]/button').click()
         
-        sleep(5)
+        sleep(8)
         
         cardapio = driver.find_element("id", 'colapseCardapioSemanal').get_attribute('innerText')
         
@@ -79,5 +86,4 @@ def GetComidinha():
         driver.close()
 
 if __name__ == '__main__':
-
-    print(GetComidinha())
+    print(GetComidinha()['Quinta-feira'])
